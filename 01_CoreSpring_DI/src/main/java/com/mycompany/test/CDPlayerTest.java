@@ -38,7 +38,7 @@ public class CDPlayerTest {
 
         //In order to pass the test, use \r\n instead of \n
         assertEquals(
-                "Playing Sgt. Pepper's Lonely Hearts Club Band by The Beatles\n",
+                "Playing Sgt. Pepper's Lonely Hearts Club Band by The Beatles\r\n",
                 systemOutRule.getLog());
     }
 }
