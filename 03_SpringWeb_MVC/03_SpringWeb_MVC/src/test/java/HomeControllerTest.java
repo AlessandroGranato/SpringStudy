@@ -91,8 +91,8 @@ public class HomeControllerTest {
     @Test
     public void shouldProcessRegistration() throws Exception {
         SpitterRepository mockRepository = mock(SpitterRepository.class);
-        Spitter unsaved = new Spitter("jbauer", "24hours", "Jack", "Bauer");
-        Spitter saved = new Spitter(24L, "jbauer", "24hours", "Jack", "Bauer");
+        Spitter unsaved = new Spitter("jbauer", "24hours", "Jack", "Bauer","jackBauer@mockEmail.mock");
+        Spitter saved = new Spitter(24L, "jbauer", "24hours", "Jack", "Bauer","jackBauer@mockEmail.mock");
         when(mockRepository.save(unsaved)).thenReturn(saved);
         SpitterController controller = new SpitterController(mockRepository);
         MockMvc mockMvc = standaloneSetup(controller).build();
@@ -100,7 +100,8 @@ public class HomeControllerTest {
                 .param("firstName", "Jack")
                 .param("lastName", "Bauer")
                 .param("username", "jbauer")
-                .param("password", "24hours"))
+                .param("password", "24hours")
+                .param("email", "jackBauer@mockEmail.mock"))
                 .andExpect(redirectedUrl("/spitter/jbauer"));
         verify(mockRepository, atLeastOnce()).save(unsaved);
     }

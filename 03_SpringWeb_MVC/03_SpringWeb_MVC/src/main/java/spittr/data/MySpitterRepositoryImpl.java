@@ -35,6 +35,6 @@ public class MySpitterRepositoryImpl implements SpitterRepository {
 
     @Override
     public Spitter findByUsername(String username) {
-        return new Spitter(username, "mockPassword", "mockFirstName", "mockLastName");
+        return new Spitter(username, "mockPassword", "mockFirstName", "mockLastName", "mockEmail@mockDomain.mock");
     }
 }
