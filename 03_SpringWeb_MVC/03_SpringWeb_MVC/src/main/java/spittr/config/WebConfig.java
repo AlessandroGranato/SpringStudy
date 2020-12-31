@@ -48,23 +48,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
     //----------------------------------------
 
-    //----------------- View Resolver with Apache tiles -----------------------
-    @Bean
-    public TilesConfigurer tilesConfigurer() {
-        TilesConfigurer tiles = new TilesConfigurer();
-        tiles.setDefinitions(new String[] {
-                "/WEB-INF/layout/tiles.xml"
-        });
-        tiles.setCheckRefresh(true);
-        return tiles;
-    }
-
+    //----------------- View Resolver with JstlView class -----------------------
     @Bean
     public ViewResolver viewResolver() {
-        return new TilesViewResolver();
+        InternalResourceViewResolver resolver =
+                new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".jsp");
+        resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
+        return resolver;
     }
     //----------------------------------------
-
 
 //    //----------------- Simple View Resolver -----------------------
 //    @Bean
@@ -77,20 +71,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 //        return resolver;
 //    }
 //    //----------------------------------------
-
-//    //----------------- View Resolver with JstlView class -----------------------
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        InternalResourceViewResolver resolver =
-//                new InternalResourceViewResolver();
-//        resolver.setPrefix("/WEB-INF/views/");
-//        resolver.setSuffix(".jsp");
-//        resolver.setViewClass(
-//                org.springframework.web.servlet.view.JstlView.class);
-//        return resolver;
-//    }
-//    //----------------------------------------
-
 
 //    //----------------- ApplicationContext for testing purposes -----------------------
 //    private static ApplicationContext applicationContext;
