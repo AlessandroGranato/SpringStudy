@@ -53,20 +53,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
     //----------------------------------------
 
-    @Bean
-    public ViewResolver viewResolver(
-            SpringTemplateEngine templateEngine) {
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(templateEngine);
-        return viewResolver;
-    }
-    @Bean
-    public TemplateEngine templateEngine(
-            TemplateResolver templateResolver) {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver);
-        return templateEngine;
-    }
+    //----------------- View Resolver with Thymeleaf -----------------------
+    //The TemplateResolver loads Thymeleaf templates
     @Bean
     public TemplateResolver templateResolver() {
         TemplateResolver templateResolver =
@@ -77,7 +65,25 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return templateResolver;
     }
 
+    //The SpringTemplateEngine processes the templates and render the results
+    @Bean
+    public TemplateEngine templateEngine(
+            TemplateResolver templateResolver) {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+        return templateEngine;
+    }
 
+    // The ThymeleafViewResolver resolves Thymeleaf template views from logical view names
+    @Bean
+    public ViewResolver viewResolver(
+            SpringTemplateEngine templateEngine) {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(templateEngine);
+        return viewResolver;
+    }
+
+    //----------------------------------------
 
 
 

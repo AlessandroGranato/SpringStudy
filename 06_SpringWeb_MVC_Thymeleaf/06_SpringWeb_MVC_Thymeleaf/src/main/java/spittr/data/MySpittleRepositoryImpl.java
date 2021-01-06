@@ -32,7 +32,7 @@ public class MySpittleRepositoryImpl implements SpittleRepository {
     public List<Spittle> findSpittles(long max, int count) {
         List<Spittle> spittles = new ArrayList<Spittle>();
         for (int i=0; i < count; i++) {
-            spittles.add(new Spittle("Spittle " + i, new Date()));
+            spittles.add(new Spittle(Long.parseLong(String.valueOf(i)),"Spittle " + i, new Date(),Double.parseDouble(String.valueOf(i)),Double.parseDouble(String.valueOf(i))));
         }
         return spittles;
     }
