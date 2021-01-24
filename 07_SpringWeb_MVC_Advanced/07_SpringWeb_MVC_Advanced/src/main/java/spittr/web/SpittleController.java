@@ -3,13 +3,18 @@ package spittr.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import spittr.DTO.SpittleForm;
 import spittr.Spittle;
 import spittr.data.SpittleRepository;
+import sun.security.provider.ConfigFile;
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -49,19 +54,37 @@ public class SpittleController {
      */
 
     @RequestMapping(method= RequestMethod.GET)
-    public List<Spittle> spittles(@RequestParam(value="max", defaultValue=MAX_LONG_AS_STRING) long max, @RequestParam(value="count", defaultValue="20") int count) {
-        return spittleRepository.findSpittles(max, count);
+    public String spittles(@RequestParam(value="max", defaultValue=MAX_LONG_AS_STRING) long max, @RequestParam(value="count", defaultValue="20") int count, Model model) {
+        System.out.println("SpittleController - /spittles GET called");
+        List<Spittle> spittleList = spittleRepository.findSpittles(max, count);
+        model.addAttribute("spittleList", spittleList);
+        model.addAttribute("spittleForm", new SpittleForm());
+        return "spittles";
     }
 
     @RequestMapping(value="/{spittleId}", method=RequestMethod.GET)
     public String spittle(@PathVariable("spittleId") long spittleId,  Model model) {
-
+        System.out.println("SpittleController - /spittles/" + spittleId + " GET called");
         Spittle spittle = spittleRepository.findOne(spittleId);
         if (spittle == null) {
             throw new SpittleNotFoundException();
         }
         model.addAttribute(spittle);
         return "spittle";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String saveSpittle(Model model,
+                              @Valid SpittleForm form,
+                              Errors errors) {
+        System.out.println("SpittleController - /spittles POST called");
+        if(errors.hasErrors()) {
+            System.out.println("Validation errors");
+            return "spittles";
+        }
+        Spittle spittle = new Spittle(form.getMessage(), new Date(), form.getLongitude(), form.getLatitude());
+        spittleRepository.saveSpittle(spittle);
+        return "redirect:/spittles";
     }
 
 

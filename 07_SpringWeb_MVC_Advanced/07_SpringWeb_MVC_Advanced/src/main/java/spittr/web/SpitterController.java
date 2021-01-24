@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spittr.Spitter;
 import spittr.data.SpitterRepository;
 
@@ -41,6 +42,7 @@ public class SpitterController {
 
     @RequestMapping(value="/register", method=POST)
     public String processRegistration(@RequestPart("profilePicture") MultipartFile profilePicture,
+                                      RedirectAttributes model,
                                       @Valid Spitter spitter,
                                       Errors errors) {
         try {
@@ -60,15 +62,21 @@ public class SpitterController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return "redirect:/spitter/" + spitter.getUsername();
+        model.addAttribute("username", spitter.getUsername());
+        model.addFlashAttribute("spitter", spitter);
+        return "redirect:/spitter/{username}";
     }
 
     @RequestMapping(value="/{username}", method=GET)
-    public String showSpitterProfile(
-            @PathVariable String username, Model model) {
-        Spitter spitter = spitterRepository.findByUsername(username);
-        model.addAttribute(spitter);
+    public String showSpitterProfile(@PathVariable String username,
+                                     Model model) {
+        if(!model.containsAttribute("spitter")) {
+            System.out.println("Spitter not found, retrieving from db");
+            Spitter spitter = spitterRepository.findByUsername(username);
+            model.addAttribute("spitter", spitter);
+        } else {
+            System.out.println("Spitter found in the model");
+        }
         return "profile";
     }
 }

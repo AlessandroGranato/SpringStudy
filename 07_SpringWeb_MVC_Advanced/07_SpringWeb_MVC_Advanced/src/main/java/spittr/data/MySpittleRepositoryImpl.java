@@ -3,6 +3,7 @@ package spittr.data;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
 import spittr.Spittle;
+import spittr.web.DuplicateSpittleException;
 import spittr.web.SpittleController;
 
 import java.util.ArrayList;
@@ -40,5 +41,12 @@ public class MySpittleRepositoryImpl implements SpittleRepository {
     @Override
     public Spittle findOne(long spittleId) {
         return new Spittle(spittleId, "Hello custom", new Date(), 777.77, 888.88);
+    }
+
+    @Override
+    public Spittle saveSpittle(Spittle spittle) {
+        //throw new DuplicateSpittleException();
+        System.out.println("Mocking the saving of Spittle " + spittle.toString());
+        return spittle;
     }
 }
