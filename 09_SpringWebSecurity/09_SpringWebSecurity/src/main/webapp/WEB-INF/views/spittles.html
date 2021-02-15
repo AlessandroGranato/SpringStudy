@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>Spittr</title>
         <link rel="stylesheet"
@@ -7,6 +9,12 @@
               th:href="@{/resources/style.css}"></link>
     </head>
     <body>
+        <div id="header" th:include="page :: header"></div>
+
+        <div sec:authorize="isAuthenticated()">
+            Hello <span sec:authentication="name">someone</span>
+        </div>
+
         <div>
             <h1>Spit it out!</h1>
             <form method="POST" th:object="${spittleForm}">
@@ -41,5 +49,7 @@
                 </li>
             </ul>
         </div>
+
+        <div id="footer" th:include="page :: copy"></div>
     </body>
 </html>

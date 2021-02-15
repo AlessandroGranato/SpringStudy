@@ -15,14 +15,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .loginPage("/login")
-                .and()
-                .authorizeRequests()
+            .and()
+            .httpBasic()
+            .realmName("Spittr")
+            .and()
+            .rememberMe()
+                .tokenValiditySeconds(2419200)
+                .key("spittrKey")
+            .and()
+            .logout()
+                .logoutSuccessUrl("/")
+            .and()
+            .authorizeRequests()
                 .antMatchers("/spitter/me").hasRole("SPITTER")
                 .antMatchers(HttpMethod.POST, "/spittles").hasRole("SPITTER")
-                .anyRequest().permitAll()
-                .and()
-                .requiresChannel()
-                .antMatchers("/spitter/form").requiresSecure();
+            .anyRequest().permitAll()
+            .and()
+            .requiresChannel()
+            .antMatchers("/spitter/form").requiresSecure();
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
