@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Spittr</title>
+        <link rel="stylesheet"
+              type="text/css"
+              th:href="@{/resources/style.css}"></link>
+    </head>
+    <body>
+        <div id="header" th:include="page :: header"></div>
+
+        <div sec:authorize="isAuthenticated()">
+            Hello <span sec:authentication="name">someone</span>
+        </div>
+
+        <div>
+            <h1>Spit it out!</h1>
+            <form method="POST" th:object="${spittleForm}">
+                <div class="errors" th:if="${#fields.hasErrors('*')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('*')}"
+                            th:text="${err}">Input is incorrect</li>
+                    </ul>
+                </div>
+                <label th:class="${#fields.hasErrors('message')}? 'error'"> Message</label>: <input type="text" th:field="*{message}" th:class="${#fields.hasErrors('message')}? 'error'" /><br/>
+                <label th:class="${#fields.hasErrors('latitude')}? 'error'"> Latitude</label>: <input type="text" th:field="*{latitude}" th:class="${#fields.hasErrors('latitude')}? 'error'" /><br/>
+                <label th:class="${#fields.hasErrors('longitude')}? 'error'"> Longitude</label>: <input type="text" th:field="*{longitude}" th:class="${#fields.hasErrors('longitude')}? 'error'" /><br/>
+
+                <!-- For passing the CSRF Token -->
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" />
+
+                <input type="submit" value="Add" />
+            </form>
+        </div>
+        <div>
+            <h1>Recent Spittles</h1>
+            <ul th:each="spittle: ${spittleList}">
+                <li th:id="'spittle_' + ${spittle.id}" th:value="${spittle.id}">
+                    <div><p th:text="${spittle.message}" /></div>
+                    <div>
+                        <span th:text="${spittle.time}" />
+                        <span th:text="${spittle.latitude}" />
+                        <span th:text="${spittle.longitude}" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="footer" th:include="page :: copy"></div>
+    </body>
+</html>

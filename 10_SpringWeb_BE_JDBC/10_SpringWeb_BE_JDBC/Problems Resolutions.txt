@@ -1,0 +1,5 @@
+Problem: Model values don't show in jsp files
+Solution: https://mkyong.com/spring-mvc/modelandviews-model-value-is-not-displayed-in-jsp-via-el/
+
+Problem: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'spittr.data.SpittleRepository' available
+Solution: Comment/Uncomment the content of class MySpittleRepositoryImpl (temporary solution)
