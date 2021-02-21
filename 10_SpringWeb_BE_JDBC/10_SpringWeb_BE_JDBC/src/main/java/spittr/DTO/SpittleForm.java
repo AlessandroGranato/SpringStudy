@@ -24,10 +24,10 @@ public class SpittleForm {
 
     }
 
-    public SpittleForm(String message, Double longitude, Double latitude) {
+    public SpittleForm(String message, Double latitude, Double longitude) {
         this.message = message;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getMessage() {

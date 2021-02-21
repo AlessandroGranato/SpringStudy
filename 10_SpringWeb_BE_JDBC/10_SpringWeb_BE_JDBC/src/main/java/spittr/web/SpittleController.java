@@ -82,7 +82,7 @@ public class SpittleController {
             System.out.println("Validation errors");
             return "spittles";
         }
-        Spittle spittle = new Spittle(form.getMessage(), new Date(), form.getLongitude(), form.getLatitude());
+        Spittle spittle = new Spittle(form.getMessage(), new Date(), form.getLatitude(), form.getLongitude());
         spittleRepository.saveSpittle(spittle);
         return "redirect:/spittles";
     }

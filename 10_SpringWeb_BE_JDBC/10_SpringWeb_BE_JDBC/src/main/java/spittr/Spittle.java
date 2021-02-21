@@ -15,19 +15,20 @@ public class Spittle {
     public Spittle(String message, Date time) {
         this(message, time, null, null);
     }
-    public Spittle(String message, Date time, Double longitude, Double latitude) {
+
+    public Spittle(String message, Date time, Double latitude, Double longitude) {
         this.id = null;
         this.message = message;
         this.time = time;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
     }
-    public Spittle(Long id, String message, Date time, Double longitude, Double latitude) {
+    public Spittle(Long id, String message, Date time, Double latitude, Double longitude) {
         this.id = id;
         this.message = message;
         this.time = time;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
@@ -40,11 +41,11 @@ public class Spittle {
     public Date getTime() {
         return time;
     }
-    public Double getLongitude() {
-        return longitude;
-    }
     public Double getLatitude() {
         return latitude;
+    }
+    public Double getLongitude() {
+        return longitude;
     }
     @Override
     public boolean equals(Object that) {

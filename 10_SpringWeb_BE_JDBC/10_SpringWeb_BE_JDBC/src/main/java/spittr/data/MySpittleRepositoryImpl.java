@@ -18,16 +18,16 @@ BE CARE: When you will implement the real class that implements SpittleRepositor
 //PART 1
 //Comment this if you want to implement a real Bean that implements SpittleRepository interface
 //Uncomment this if you want to implement a mock Bean that will not implement anything
-/*
+
 public class MySpittleRepositoryImpl  {
 
-}*/
+}
 
 
 //PART 2
 //Uncomment this if you want to implement a real Bean that implements SpittleRepository interface
 //comment this if you want to implement a mock Bean that will not implement anything
-@Component
+/*@Component
 public class MySpittleRepositoryImpl implements SpittleRepository {
     @Override
     public List<Spittle> findSpittles(long max, int count) {
@@ -50,3 +50,4 @@ public class MySpittleRepositoryImpl implements SpittleRepository {
         return spittle;
     }
 }
+*/
